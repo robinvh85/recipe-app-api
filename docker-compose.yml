@@ -14,15 +14,27 @@ services:
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - DB_HOST=db
-      - DB_NAME=app
-      - DB_USER=postgres
+      - DB_NAME=recipe_app_api
+      - DB_USER=mysql
       - DB_PASS=supersecretpassword
     depends_on:
       - db
 
   db:
-    image: postgres:10-alpine
+    # image: postgres:10-alpine
+    # environment:
+    #   - POSTGRES_DB=app
+    #   - POSTGRES_USER=postgres
+    #   - POSTGRES_PASSOWRD=supersecretpassword
+    image: mysql:5.6
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./conf/mysql:/etc/mysql/mysql.conf.d
+      - ./tmp/mysql/data:/var/lib/mysql
+      - ./tmp/mysql/log:/var/log/mysql
     environment:
-      - POSTGRES_DB=app
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSOWRD=supersecretpassword
+      - MYSQL_DATABASE=recipe_app_api
+      - MYSQL_USER=mysql
+      - MYSQL_PASSWORD=supersecretpassword
+      - MYSQL_ROOT_PASSWORD=supersecretpassword
