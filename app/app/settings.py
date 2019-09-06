@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core'
+    'rest_framework',
+    'rest_framework.authtoken',
+    'core',
+    'user'
 ]
 
 MIDDLEWARE = [
@@ -74,13 +77,25 @@ WSGI_APPLICATION = 'app.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
+SQL_MODE = [
+    'STRICT_TRANS_TABLES',
+    'TRADITIONAL',
+    'NO_AUTO_VALUE_ON_ZERO',
+    'ONLY_FULL_GROUP_BY',
+]
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'HOST': os.environ.get('DB_HOST'),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'sql_mode': ','.join(SQL_MODE),
+        },
     }
 }
 
