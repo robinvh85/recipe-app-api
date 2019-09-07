@@ -6,10 +6,12 @@ from recipe import views
 
 router = DefaultRouter()
 router.register('tags', views.TagViewSet)
+router.register('ingredients', views.IngredientViewSet)
 
 app_name = 'recipe'
 
 urlpatterns = [
-    # when match recipe/, all url by DefaultRouter will be auto generated if TagViewSet have them
+    # when match recipe/, all url by DefaultRouter will be auto generated
+    # if TagViewSet have them
     path('', include(router.urls))
 ]
